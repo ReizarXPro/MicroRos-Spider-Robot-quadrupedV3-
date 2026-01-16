@@ -10,6 +10,9 @@ This enhanced quadruped balance controller uses PID control algorithms and provi
 - **Complementary Filter**: Combines accel and gyro data for stable angle estimation
 - **Calibration**: Gyroscope and accelerometer calibration routines
 - **Flexible Configuration**: Multiple base positions and adjustable parameters
+<img width="1800" height="1053" alt="Screenshot from 2026-01-16 18-48-51" src="https://github.com/user-attachments/assets/e5f8522c-b13b-45c4-a62e-b9b13039859b" />
+<img width="1800" height="1053" alt="Screenshot from 2026-01-16 18-49-07" src="https://github.com/user-attachments/assets/aac83d0f-02f9-47be-b4b6-c1afaedda17d" />
+<img width="1800" height="1053" alt="Screenshot from 2026-01-16 18-49-16" src="https://github.com/user-attachments/assets/46d6ee62-dfba-4cb1-b855-e2750555c620" />
 
 ### GUI Features
 - **Real-time Monitoring**: Live attitude plots and status display
