@@ -1,8 +1,8 @@
- Quadruped Balance & Locomotion Controller with PID, Walking Gait, and Enhanced GUI
+Markdown# Quadruped Balance & Locomotion Controller with PID, Walking Gait, and Enhanced GUI
 
 This advanced quadruped robot controller combines PID-based balance control with dynamic walking gaits and a comprehensive, cyberpunk-styled GUI for real-time monitoring, tuning, and manual control.
 
-## New in v3.0 (Upgraded GUI)
+## New in v2.0 (Upgraded GUI)
 - **3D Orientation Visualization**: New tab with real-time 3D cube representation of robot attitude (roll/pitch) using neon cyberpunk styling and depth-based effects
 - **Tabbed Visualization Matrix**: Switch between classic roll/pitch oscillation plots and the new 3D view
 - **Improved Monitoring**: Cleaner layout with enhanced status feedback and seamless integration of walking + balance controls
@@ -22,7 +22,7 @@ This advanced quadruped robot controller combines PID-based balance control with
 - Dynamic walking gaits with configurable speed, step height/length, and cycle time
 - Safety features: stability monitoring, fall risk detection, emergency mode
 
-### GUI (quadruped_gui.py)
+### Main GUI (quadruped_gui.py)
 - **Cyberpunk aesthetic** with neon accents, custom frames, and precise sliders
 - **Real-time monitoring**: Roll/pitch plots, 3D attitude cube, leg states, system status, walking status
 - **Interactive controls**:
@@ -32,13 +32,30 @@ This advanced quadruped robot controller combines PID-based balance control with
   - Stance selection
   - Per-leg manual override with balance weights
   - One-click sensor calibration
-- **Scrollable control panel** for easy access on smaller screens
 
-## Installation
+### Standalone IMU Visualization GUI (gui_gy.py)
+A lightweight, standalone ROS 2 + Tkinter application specifically for visualizing raw MPU6050 IMU data. This was the precursor to the integrated 3D visualization in the main GUI and is useful for:
+- Quick IMU debugging without launching the full quadruped controller
+- Monitoring raw accelerometer, gyroscope, and temperature data
+- Testing sensor calibration independently
 
-### Prerequisites
+**Key Features**:
+- **Dark professional theme** (Visual Studio Code-inspired)
+- **3D cube orientation visualization** with depth-shaded edges and labeled axes (X=red, Y=green, Z=blue)
+- **Real-time sensor readings** with progress bars for roll/pitch/yaw
+- **Data graphs tab**: Separate plots for accelerometer, gyroscope, and temperature over time
+- **Calibration tools**: One-click gyroscope calibration (keep device still) and orientation reset
+- **Settings tab**: Adjustable complementary filter weight (gyro vs. accel blend) and graph data point count
+- **Status log** and connection indicators (ROS & ESP32)
+
+**Usage**:
 ```bash
-# ROS 2 Humble (Ubuntu 22.04 recommended)
+source /opt/ros/humble/setup.bash
+python3 gui_gy.py
+Run this independently to visualize /esp32/mpu6050/data topic data. Great for initial sensor setup or troubleshooting.
+Installation
+Prerequisites
+Bash# ROS 2 Humble (Ubuntu 22.04 recommended)
 sudo apt update && sudo apt install ros-humble-desktop
 
 # Python dependencies
@@ -47,21 +64,24 @@ pip3 install matplotlib numpy rclpy
 # Tkinter (usually pre-installed)
 sudo apt install python3-tk
 File Structure
-quadruped_controller/
+textquadruped_controller/
 ├── quadruped_controller_pid.py   # Main controller node
-├── quadruped_gui.py              # Upgraded cyberpunk GUI
+├── quadruped_gui.py              # Main cyberpunk-styled GUI (recommended)
+├── gui_gy.py                     # Standalone MPU6050 visualization GUI
 ├── launch.sh                     # Optional launch helper
 └── README.md                     # This file
 Usage
-Quick Start
+Quick Start (Main System)
 Bash# Terminal 1: Launch controller
 source /opt/ros/humble/setup.bash
 python3 quadruped_controller_pid.py
 
-# Terminal 2: Launch GUI
+# Terminal 2: Launch main GUI
 source /opt/ros/humble/setup.bash
 python3 quadruped_gui.py
-Keyboard Controls (in GUI window)
+Standalone IMU Visualizer
+Bashsource /opt/ros/humble/setup.bash
+python3 gui_gy.py
 
 W / ↑: Forward
 S / ↓: Backward
