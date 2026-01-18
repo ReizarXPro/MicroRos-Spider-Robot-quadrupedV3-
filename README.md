@@ -1,245 +1,153 @@
-# Quadruped Balance & Movement Controller with PID and GUI
+ Quadruped Balance & Locomotion Controller with PID, Walking Gait, and Enhanced GUI
 
-This enhanced quadruped balance controller uses PID control algorithms and provides a comprehensive GUI for tuning and monitoring your quadruped robot's balance system.
+This advanced quadruped robot controller combines PID-based balance control with dynamic walking gaits and a comprehensive, cyberpunk-styled GUI for real-time monitoring, tuning, and manual control.
+
+## New in v2.0 (Upgraded GUI)
+- **3D Orientation Visualization**: New tab with real-time 3D cube representation of robot attitude (roll/pitch) using neon cyberpunk styling and depth-based effects
+- **Tabbed Visualization Matrix**: Switch between classic roll/pitch oscillation plots and the new 3D view
+- **Improved Monitoring**: Cleaner layout with enhanced status feedback and seamless integration of walking + balance controls
+- **Maintained Features**: Full walking gait support (tripod, etc.), keyboard/manual movement, PID tuning, stance selection, leg-by-leg manual override, sensor calibration
+
+<img width="1800" height="1053" alt="Control Panel" src="https://github.com/user-attachments/assets/e5f8522c-b13b-45c4-a62e-b9b13039859b" />
+<img width="1800" height="1053" alt="Oscillation Plots" src="https://github.com/user-attachments/assets/aac83d0f-02f9-47be-b4b6-c1afaedda17d" />
+<img width="1800" height="1053" alt="3D Visualization Tab (New)" src="https://github.com/user-attachments/assets/46d6ee62-dfba-4cb1-b855-e2750555c620" />
 
 ## Features
 
-### Enhanced Controller
-- **PID Control**: Separate PID controllers for roll and pitch axes
-- **IMU Integration**: Uses MPU6050 accelerometer and gyroscope data
-- **Complementary Filter**: Combines accel and gyro data for stable angle estimation
-- **Calibration**: Gyroscope and accelerometer calibration routines
-- **Flexible Configuration**: Multiple base positions and adjustable parameters
-<img width="1800" height="1053" alt="Screenshot from 2026-01-16 18-48-51" src="https://github.com/user-attachments/assets/e5f8522c-b13b-45c4-a62e-b9b13039859b" />
-<img width="1800" height="1053" alt="Screenshot from 2026-01-16 18-49-07" src="https://github.com/user-attachments/assets/aac83d0f-02f9-47be-b4b6-c1afaedda17d" />
-<img width="1800" height="1053" alt="Screenshot from 2026-01-16 18-49-16" src="https://github.com/user-attachments/assets/46d6ee62-dfba-4cb1-b855-e2750555c620" />
+### Controller (quadruped_controller_pid.py)
+- Dual PID controllers (separate for roll and pitch)
+- Complementary filter for stable orientation estimation
+- Gyroscope and accelerometer calibration
+- Multiple base stances (stand, crouch, wide, narrow)
+- Dynamic walking gaits with configurable speed, step height/length, and cycle time
+- Safety features: stability monitoring, fall risk detection, emergency mode
 
-### GUI Features
-- **Real-time Monitoring**: Live attitude plots and status display
-- **PID Tuning**: Interactive sliders for Kp, Ki, Kd parameters
-- **Calibration Tools**: One-click calibration for sensors
-- **Position Control**: Switch between different robot poses
-- **Servo Monitoring**: Live display of all servo angles
+### GUI (quadruped_gui.py)
+- **Cyberpunk aesthetic** with neon accents, custom frames, and precise sliders
+- **Real-time monitoring**: Roll/pitch plots, 3D attitude cube, leg states, system status, walking status
+- **Interactive controls**:
+  - PID tuning (Kp, Ki, Kd for roll & pitch)
+  - Walking enable/disable + gait selection
+  - Keyboard (WASD/Arrows + Space) or button-based movement
+  - Stance selection
+  - Per-leg manual override with balance weights
+  - One-click sensor calibration
+- **Scrollable control panel** for easy access on smaller screens
 
 ## Installation
 
 ### Prerequisites
 ```bash
-# Install ROS2 (Ubuntu 22.04 - Humble)
-sudo apt update
-sudo apt install ros-humble-desktop
+# ROS 2 Humble (Ubuntu 22.04 recommended)
+sudo apt update && sudo apt install ros-humble-desktop
 
-# Install Python dependencies
-pip3 install matplotlib numpy
+# Python dependencies
+pip3 install matplotlib numpy rclpy
+
+# Tkinter (usually pre-installed)
 sudo apt install python3-tk
-
-# Install ROS2 Python packages
-sudo apt install python3-rclpy python3-std-msgs
-```
-
-### File Structure
-```
-quadruped_controller/
-├── quadruped_balance_controller_pid.py  # Enhanced controller with PID
-├── quadruped_gui.py                     # GUI application
-├── launch.sh                           # Launch script
-└── README.md                           # This file
-```
-
-## Usage
-
-### Quick Start
-1. Make the launch script executable:
-```bash
-chmod +x launch.sh
-```
-
-2. Run the launcher:
-```bash
-./launch.sh
-```
-
-3. Select option 3 to launch both controller and GUI
-
-### Manual Launch
-
-#### Terminal 1 - Controller Node
-```bash
+File Structure
+textquadruped_controller/
+├── quadruped_controller_pid.py   # Main controller node
+├── quadruped_gui.py              # Upgraded cyberpunk GUI
+├── launch.sh                     # Optional launch helper
+└── README.md                     # This file
+Usage
+Quick Start
+Bash# Terminal 1: Launch controller
 source /opt/ros/humble/setup.bash
-python3 quadruped_balance_controller_pid.py
-```
+python3 quadruped_controller_pid.py
 
-#### Terminal 2 - GUI
-```bash
+# Terminal 2: Launch GUI
 source /opt/ros/humble/setup.bash
 python3 quadruped_gui.py
-```
+Keyboard Controls (in GUI window)
 
-## Configuration
+W / ↑: Forward
+S / ↓: Backward
+A / ←: Left
+D / →: Right
+Space: Stop walking
 
-### Robot Setup
-The controller expects 8 servos mapped as follows:
-- 0: Front Right Hip
-- 1: Front Right Knee  
-- 2: Front Left Hip
-- 3: Front Left Knee
-- 4: Rear Right Hip
-- 5: Rear Right Knee
-- 6: Rear Left Hip
-- 7: Rear Left Knee
+Optional Launch Script
+Bashchmod +x launch.sh
+./launch.sh
+# Choose option to run controller, GUI, or both
+Configuration
+Servo Mapping (8 servos expected)
 
-### ROS2 Topics
-- **Input**: `/esp32/mpu6050/data` (Float32MultiArray)
-  - Format: [accel_x, accel_y, accel_z, gyro_x, gyro_y, gyro_z, temperature]
-- **Output**: `esp32/servo/angles` (Int32MultiArray)
-  - Format: [servo0_angle, servo1_angle, ..., servo7_angle]
+0: Front Right Hip
+1: Front Right Knee
+2: Front Left Hip
+3: Front Left Knee
+4: Rear Right Hip
+5: Rear Right Knee
+6: Rear Left Hip
+7: Rear Left Knee
 
-### IMU Data Format
-The MPU6050 data should be published as Float32MultiArray with 7 elements:
-```
-data[0] = accel_x (m/s²)
-data[1] = accel_y (m/s²)  
-data[2] = accel_z (m/s²)
-data[3] = gyro_x (rad/s)
-data[4] = gyro_y (rad/s)
-data[5] = gyro_z (rad/s)
-data[6] = temperature (°C)
-```
+ROS 2 Topics
 
-## Calibration Process
+Subscribe: /esp32/mpu6050/data (Float32MultiArray)
+Format: [accel_x, accel_y, accel_z, gyro_x, gyro_y, gyro_z, temp]
 
-### Gyroscope Calibration
-1. Place robot on level, stable surface
-2. Ensure robot is completely still
-3. Click "Calibrate Gyroscope" in GUI
-4. Wait for calibration to complete (~2 seconds)
+Publish: esp32/servo/angles (Int32MultiArray)
+Format: 8 servo angles (0-180°)
 
-### Accelerometer Calibration  
-1. Place robot on known level surface
-2. Click "Calibrate Accelerometer" in GUI
-3. Wait for calibration to complete (~2 seconds)
 
-## PID Tuning Guide
+Calibration
 
-### Understanding PID Parameters
+Place robot on flat, stable surface
+Ensure complete stillness
+Click ◢ CALIBRATE SENSORS ◣ in GUI
+Wait ~2 seconds for completion
 
-**Proportional (Kp)**:
-- Controls immediate response to error
-- Higher values = faster response, may cause oscillation
-- Start with: 1.0-3.0
+PID Tuning Guide
+Start with:
+textRoll/Pitch Kp: 2.0–3.0
+Roll/Pitch Ki: 0.05–0.2
+Roll/Pitch Kd: 0.3–0.8
+Process:
 
-**Integral (Ki)**:
-- Eliminates steady-state error
-- Higher values = eliminates offset, may cause instability
-- Start with: 0.05-0.2
+Increase Kp until fast response (watch for oscillation)
+Add Ki to eliminate steady-state error
+Add Kd to dampen overshoot
+Test on various surfaces and disturbances
 
-**Derivative (Kd)**:
-- Predicts future error, reduces overshoot
-- Higher values = less overshoot, may amplify noise
-- Start with: 0.1-1.0
+Additional tunable parameters (via GUI):
 
-### Tuning Process
-1. Start with conservative values (Kp=1.0, Ki=0.05, Kd=0.1)
-2. Increase Kp until system responds quickly but doesn't oscillate
-3. Add Ki to eliminate steady-state error
-4. Add Kd to reduce overshoot and improve stability
-5. Test on different surfaces and angles
+Max correction angle
+Deadzone
+Walking speed, step height/length, cycle time
 
-### Recommended Starting Values
-```
-Roll PID:  Kp=2.0, Ki=0.1, Kd=0.5
-Pitch PID: Kp=2.0, Ki=0.1, Kd=0.5
-```
+Troubleshooting
 
-## Troubleshooting
+Oscillation: Lower Kp/Kd, increase deadzone
+Slow correction: Increase Kp, recalibrate sensors
+Drift: Recalibrate gyro, ensure level surface
+No response: Check ROS topics with ros2 topic echo
 
-### Common Issues
+Hardware Notes (ESP32 Side Example)
+C++// Publish IMU data frequently
+float data[7] = {ax, ay, az, gx, gy, gz, temp};
+pub_imu.publish(Float32MultiArray with data);
 
-**Robot oscillates continuously**:
-- Reduce Kp values
-- Increase deadzone
-- Check for mechanical play in joints
-
-**Slow response to tilting**:
-- Increase Kp values
-- Reduce deadzone
-- Verify IMU calibration
-
-**Robot doesn't return to level**:
-- Increase Ki values
-- Check for sensor drift
-- Recalibrate sensors
-
-**Noisy behavior**:
-- Reduce Kd values
-- Lower complementary filter alpha
-- Check electrical connections
-
-### Log Analysis
-Monitor the ROS2 logs for:
-```bash
-ros2 topic echo /esp32/mpu6050/data
-ros2 topic echo esp32/servo/angles
-```
-
-## Advanced Configuration
-
-### Complementary Filter
-Adjust the alpha parameter (0.98 default):
-- Higher values (0.99): More gyroscope influence, less noise
-- Lower values (0.95): More accelerometer influence, more responsive
-
-### Control Loop Rate
-Default: 50Hz (20ms)
-- Increase for faster response
-- Decrease if computational load is high
-
-### Safety Limits
-- Maximum correction: ±45° (adjustable)
-- Servo limits: 0-180°
-- Deadzone: 2° (adjustable via GUI)
-
-## Hardware Integration
-
-### ESP32 Side
-Ensure your ESP32 publishes IMU data at consistent rate:
-```cpp
-// Example ESP32 code structure
-void publishIMUData() {
-  float data[7] = {ax, ay, az, gx, gy, gz, temp};
-  // Publish to /esp32/mpu6050/data
+// Subscribe to servo commands
+void servo_cb(const Int32MultiArray& msg) {
+  for(int i = 0; i < 8; i++) servo[i].write(msg.data[i]);
 }
+Contributing
+Issues, PRs, and feature requests welcome! Especially:
 
-void servoCallback(const std_msgs::Int32MultiArray& msg) {
-  // Apply received servo angles
-  for(int i = 0; i < 8; i++) {
-    servo[i].write(msg.data[i]);
-  }
-}
-```
+Additional gait patterns
+Joystick/gamepad support
+Magnetometer integration for full yaw tracking
 
-## Contributing
+License
+MIT License
+Acknowledgments
 
-Feel free to submit issues and enhancement requests!
+ROS 2 community
+Open-source robotics projects
+Cyberpunk 2077 for aesthetic inspiration 😎
 
-### Development Setup
-```bash
-# Clone repository
-git clone <your-repo>
-cd quadruped_controller
-
-# Create Python virtual environment
-python3 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-```
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## Acknowledgments
-
-- ROS2 community for excellent robotics framework
-- MPU6050 library contributors
-- Matplotlib for visualization capabilities
+textThis upgraded README now reflects all the new features (espe
