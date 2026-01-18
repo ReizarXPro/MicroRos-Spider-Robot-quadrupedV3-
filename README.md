@@ -1,4 +1,4 @@
-# Quadruped Balance Controller with PID and GUI
+# Quadruped Balance & Movement Controller with PID and GUI
 
 This enhanced quadruped balance controller uses PID control algorithms and provides a comprehensive GUI for tuning and monitoring your quadruped robot's balance system.
 
