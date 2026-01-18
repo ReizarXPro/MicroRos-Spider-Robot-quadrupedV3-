@@ -47,7 +47,7 @@ pip3 install matplotlib numpy rclpy
 # Tkinter (usually pre-installed)
 sudo apt install python3-tk
 File Structure
-textquadruped_controller/
+quadruped_controller/
 ├── quadruped_controller_pid.py   # Main controller node
 ├── quadruped_gui.py              # Upgraded cyberpunk GUI
 ├── launch.sh                     # Optional launch helper
@@ -103,8 +103,8 @@ Wait ~2 seconds for completion
 
 PID Tuning Guide
 Start with:
-textRoll/Pitch Kp: 2.0–3.0
-Roll/Pitch Ki: 0.05–0.2
+Roll/Pitch Kp: 0.1–0.3
+Roll/Pitch Ki: 0.05–0.2 
 Roll/Pitch Kd: 0.3–0.8
 Process:
 
@@ -149,5 +149,3 @@ Acknowledgments
 ROS 2 community
 Open-source robotics projects
 Cyberpunk 2077 for aesthetic inspiration 😎
-
-textThis upgraded README now reflects all the new features (espe
