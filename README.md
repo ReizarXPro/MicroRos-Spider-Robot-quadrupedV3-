@@ -161,11 +161,3 @@ Issues, PRs, and feature requests welcome! Especially:
 Additional gait patterns
 Joystick/gamepad support
 Magnetometer integration for full yaw tracking
-
-License
-MIT License
-Acknowledgments
-
-ROS 2 community
-Open-source robotics projects
-Cyberpunk 2077 for aesthetic inspiration 😎
