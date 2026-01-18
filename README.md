@@ -1,4 +1,4 @@
-   #Quadruped Balance & Locomotion Controller with PID, Walking Gait, and Enhanced GUI
+   # Quadruped Balance & Locomotion Controller with PID, Walking Gait, and Enhanced GUI
 
 This advanced quadruped robot controller combines PID-based balance control with dynamic walking gaits and a comprehensive, cyberpunk-styled GUI for real-time monitoring, tuning, and manual control.
 
