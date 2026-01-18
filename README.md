@@ -1,4 +1,4 @@
-Markdown# Quadruped Balance & Locomotion Controller with PID, Walking Gait, and Enhanced GUI
+   Quadruped Balance & Locomotion Controller with PID, Walking Gait, and Enhanced GUI
 
 This advanced quadruped robot controller combines PID-based balance control with dynamic walking gaits and a comprehensive, cyberpunk-styled GUI for real-time monitoring, tuning, and manual control.
 
@@ -64,7 +64,7 @@ pip3 install matplotlib numpy rclpy
 # Tkinter (usually pre-installed)
 sudo apt install python3-tk
 File Structure
-textquadruped_controller/
+quadruped_controller/
 ├── quadruped_controller_pid.py   # Main controller node
 ├── quadruped_gui.py              # Main cyberpunk-styled GUI (recommended)
 ├── gui_gy.py                     # Standalone MPU6050 visualization GUI
