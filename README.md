@@ -2,7 +2,7 @@
 
 This advanced quadruped robot controller combines PID-based balance control with dynamic walking gaits and a comprehensive, cyberpunk-styled GUI for real-time monitoring, tuning, and manual control.
 
-## New in v2.0 (Upgraded GUI)
+## New in v3.0 (Upgraded GUI)
 - **3D Orientation Visualization**: New tab with real-time 3D cube representation of robot attitude (roll/pitch) using neon cyberpunk styling and depth-based effects
 - **Tabbed Visualization Matrix**: Switch between classic roll/pitch oscillation plots and the new 3D view
 - **Improved Monitoring**: Cleaner layout with enhanced status feedback and seamless integration of walking + balance controls
